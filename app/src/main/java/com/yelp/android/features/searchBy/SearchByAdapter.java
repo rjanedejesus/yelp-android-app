@@ -39,8 +39,6 @@ public class SearchByAdapter extends RecyclerView.Adapter<SearchByAdapter.Search
     private String completeLocation;
     private String itemLocation;
 
-
-
     @Inject
     SearchByAdapter() {
         mList = new ArrayList<>();
@@ -94,7 +92,7 @@ public class SearchByAdapter extends RecyclerView.Adapter<SearchByAdapter.Search
                 intent.putExtra("categories", searchedItem.categories.get(0).title);
                 intent.putExtra("location", itemLocation);
                 intent.putExtra("rating", String.valueOf(searchedItem.rating));
-                intent.putExtra("review_count", searchedItem.review_count);
+                intent.putExtra("review_count", String.valueOf(searchedItem.review_count));
                 intent.putExtra("display_phone", searchedItem.display_phone);
                 intent.putExtra("id", searchedItem.id);
                 context.startActivity(intent);
@@ -158,6 +156,11 @@ public class SearchByAdapter extends RecyclerView.Adapter<SearchByAdapter.Search
 
 
         }
+    }
+
+    public void clearData() {
+        this.mList.clear();
+        this.notifyDataSetChanged();
     }
 
   

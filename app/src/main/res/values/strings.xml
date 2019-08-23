@@ -10,7 +10,7 @@
     <string name="confirm_logout">Are you sure you want to logout?</string>
     <string name="invalid_token">Session expired. Please login again.</string>
     <string name="done">Done</string>
-    <string name="title_empty"></string>
+    <string name="title_empty"> </string>
     <string name="no_items">No items</string>
 
     <!-- Error View -->
@@ -28,6 +28,7 @@
     <string name="search_business_name">Business name</string>
     <string name="search_address">Address/city/postal code</string>
     <string name="search_cuisine_type">Cuisine type</string>
+    <string name="price">$$$</string>
     <string name="search_business">Search business</string>
     <string name="search_location">Search location</string>
     <string name="current_location">Current location</string>

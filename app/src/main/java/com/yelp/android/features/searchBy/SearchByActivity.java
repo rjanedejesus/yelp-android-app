@@ -1,5 +1,6 @@
 package com.yelp.android.features.searchBy;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -41,6 +42,7 @@ public class SearchByActivity extends BaseActivity implements SearchByMvpView {
 
     @Inject SearchByAdapter searchByAdapter;
     private CustomTextWatcher customTextWatcher;
+    private ProgressDialog progressDialog;
 
     // UI references.
     @BindView(R.id.search_business_name_toggle)
@@ -65,6 +67,7 @@ public class SearchByActivity extends BaseActivity implements SearchByMvpView {
 
     @OnClick(R.id.search_button) void searchButtonClicked() {
         Toast.makeText(this, "Search button clicked!", Toast.LENGTH_SHORT).show();
+        searchByAdapter.clearData();
         mSearchLocationLayout.setVisibility(View.GONE);
         mCurrentLocationLayout.setVisibility(View.GONE);
         presenter.getSearchedList("New York City");
@@ -125,6 +128,14 @@ public class SearchByActivity extends BaseActivity implements SearchByMvpView {
 
     @Override
     public void showProgress(boolean show) {
+        if (show){
+            progressDialog = new ProgressDialog(this);
+            progressDialog.setCancelable(false);
+            progressDialog.setMessage("Please wait...");
+            progressDialog.show();
+        } else {
+            progressDialog.dismiss();
+        }
 
     }
 

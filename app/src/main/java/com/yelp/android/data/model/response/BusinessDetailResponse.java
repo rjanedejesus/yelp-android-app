@@ -4,8 +4,10 @@ package com.yelp.android.data.model.response;
 import java.util.ArrayList;
 
 public class BusinessDetailResponse {
-    private String price;
-    private String name;
+    public String price;
+    public String name;
+    public ArrayList<BusinessHours> hours;
+    public ArrayList photos;
 
     public String getName() {
         return name;
@@ -23,11 +25,21 @@ public class BusinessDetailResponse {
         this.price = price;
     }
 
+    public ArrayList<BusinessHours> getHours() {
+        return hours;
+    }
 
+    public void setHours(ArrayList<BusinessHours> hours) {
+        this.hours = hours;
+    }
 
+    public ArrayList getPhotos() {
+        return photos;
+    }
 
-
-
+    public void setPhotos(ArrayList photos) {
+        this.photos = photos;
+    }
 
 
 }

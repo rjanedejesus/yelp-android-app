@@ -11,6 +11,7 @@ import com.yelp.android.features.base.BasePresenter;
 import com.yelp.android.injection.ConfigPersistent;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -40,11 +41,12 @@ public class SearchByPresenter extends BasePresenter<SearchByMvpView> {
 //     * @param
 //     */
 //    public void getSearchedList(final int page, String location, String sortType) {
-    public void getSearchedList(String location) {
+    public void getSearchedList(String location, double longitude, double latitude, String term) {
         httpRequest = HttpRequestHelper.getInstance();
 //        httpRequest.api.getList(location, 7, sortType)
+        checkViewAttached();
         getView().showProgress(true);
-        httpRequest.api.getList(location)
+        httpRequest.api.getList(location, longitude, latitude, term)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(

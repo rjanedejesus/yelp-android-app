@@ -7,6 +7,7 @@
     android:background="@drawable/background_blue_gradient">
 
     <LinearLayout
+        android:id="@+id/container_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -53,7 +54,8 @@
                         android:paddingStart="@dimen/text_large"
                         android:background="@drawable/border_edittext"
                         android:hint="@string/search_business"
-                        android:textSize="@dimen/text_small">
+                        android:textSize="@dimen/text_small"
+                        android:singleLine="true">
                     </EditText>
 
                     <ImageView
@@ -86,10 +88,11 @@
                         android:layout_margin="5dp"
                         android:ems="10"
                         android:hint="@string/search_location"
-                        android:drawableLeft="@drawable/round_search_black_18"
+                        android:drawableLeft="@drawable/ic_map_marker_grey600_24dp"
                         android:drawablePadding="@dimen/margin_normal"
                         android:textSize="@dimen/text_small"
-                        android:background="@null">
+                        android:background="@null"
+                        android:singleLine="true">
                     </EditText>
 
                     <View
@@ -115,7 +118,7 @@
                         android:layout_margin="5dp"
                         android:text="@string/current_location"
                         android:textColor="@color/blue"
-                        android:drawableLeft="@drawable/round_search_black_18"
+                        android:drawableLeft="@drawable/ic_map_marker_grey600_24dp"
                         android:drawablePadding="@dimen/margin_normal"
                         android:textSize="@dimen/text_small"
                         android:gravity="center_vertical">

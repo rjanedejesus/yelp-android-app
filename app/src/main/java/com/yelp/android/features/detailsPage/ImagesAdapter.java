@@ -55,9 +55,17 @@ public class ImagesAdapter extends RecyclerView.Adapter<ImagesAdapter.ImagesView
     @Override
     public void onBindViewHolder(ImagesViewHolder holder, int position) {
         d("onBindViewHolder >> imageUrls >> " + imageUrls);
+
+//        Glide.with(context)
+//                .load(imageUrls.get(position).getImageUrl())
+//                .apply(RequestOptions.centerCropTransform())
+//                .into(holder.imageView);
+
         Glide.with(context)
                 .load(imageUrls.get(position).getImageUrl())
-                .apply(RequestOptions.centerCropTransform())
+                .apply(new RequestOptions()
+                        .placeholder(R.drawable.ic_image_area_grey600_24dp)
+                        .centerCrop())
                 .into(holder.imageView);
 
     }

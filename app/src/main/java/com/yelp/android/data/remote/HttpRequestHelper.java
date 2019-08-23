@@ -39,8 +39,8 @@ public class HttpRequestHelper {
         logBody.setLevel(HttpLoggingInterceptor.Level.BODY);
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
 //        if (Config.isDebugMode()) {
-//            httpClient.addInterceptor(logHeader);
-//            httpClient.addInterceptor(logBody);
+            httpClient.addInterceptor(logHeader);
+            httpClient.addInterceptor(logBody);
 //        }
 
         httpClient.connectTimeout(100, TimeUnit.SECONDS);
@@ -141,9 +141,13 @@ public class HttpRequestHelper {
         //Get searched list
 //        @GET("/search")
 //        Observable<SearchedResponse> getList(@Query("page[number]") int pageNumber, @Query("page[size]") int pageSize, @Query("sort_by") String sortType);
-        @GET("search")
-        Observable<SearchedResponse> getList(@Query("location") String location);
+//        String location, double longitude, double latitude, String term
 
+        //Get searched list
+        @GET("search")
+        Observable<SearchedResponse> getList(@Query("location") String location, @Query("longitude") double longitude, @Query("latitude") double latitude, @Query("term") String term);
+
+        //business details
         @GET("{id}")
         Observable<BusinessDetailResponse> getBusinessDetails(@Path("id") String id);
 

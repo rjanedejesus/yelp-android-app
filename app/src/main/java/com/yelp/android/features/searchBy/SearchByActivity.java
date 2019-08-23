@@ -1,6 +1,9 @@
 package com.yelp.android.features.searchBy;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -11,6 +14,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -35,7 +39,13 @@ import static timber.log.Timber.d;
 /**
  * screen where you chose what category to search
  */
-public class SearchByActivity extends BaseActivity implements SearchByMvpView {
+public class SearchByActivity extends BaseActivity implements SearchByMvpView{
+
+    private String apiLocation;
+    private double apiLocationLongitude;
+    private double apiLocationLatitude;
+    private String apiTerm;
+    boolean userTouchedSearchBusinessView;
 
     @Inject
     SearchByPresenter presenter;
@@ -64,13 +74,19 @@ public class SearchByActivity extends BaseActivity implements SearchByMvpView {
     LinearLayout mSearchLocationLayout;
     @BindView(R.id.current_location_layout)
     LinearLayout mCurrentLocationLayout;
+    @BindView(R.id.container_layout)
+    LinearLayout mContainerLayout;
 
     @OnClick(R.id.search_button) void searchButtonClicked() {
-        Toast.makeText(this, "Search button clicked!", Toast.LENGTH_SHORT).show();
         searchByAdapter.clearData();
+        hideKeyboard(this);
         mSearchLocationLayout.setVisibility(View.GONE);
         mCurrentLocationLayout.setVisibility(View.GONE);
-        presenter.getSearchedList("New York City");
+        mSearchBusinessEdittext.clearFocus();
+
+        apiLocation = mSearchLocationEdittext.getText().toString();
+        apiTerm = mSearchBusinessEdittext.getText().toString();
+        presenter.getSearchedList(apiLocation, apiLocationLongitude, apiLocationLatitude, apiTerm);
 
     }
 
@@ -111,16 +127,44 @@ public class SearchByActivity extends BaseActivity implements SearchByMvpView {
             actionBar.setDisplayHomeAsUpEnabled(false); // remove the left caret
             actionBar.setDisplayShowHomeEnabled(false); // remove the icon
         }
+
         customTextWatcher=new CustomTextWatcher();
         mSearchBusinessEdittext.addTextChangedListener(customTextWatcher);
+
         mSearchBusinessEdittext.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
-            public void onFocusChange(View arg0, boolean hasfocus) {
-                if (hasfocus) {
-                    d("mSearchBusinessEdittext touched!");
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    mSearchLocationLayout.setVisibility(View.VISIBLE);
+                    mCurrentLocationLayout.setVisibility(View.VISIBLE);
+                } else {
+                    mSearchLocationLayout.setVisibility(View.GONE);
+                    mCurrentLocationLayout.setVisibility(View.GONE);
+                }
+            }
+        });
+
+        mSearchLocationEdittext.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
                     mSearchLocationLayout.setVisibility(View.VISIBLE);
                     mCurrentLocationLayout.setVisibility(View.VISIBLE);
                 }
+            }
+        });
+
+        mContainerLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Get the input method manager
+                InputMethodManager inputMethodManager = (InputMethodManager)
+                        view.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                // Hide the soft keyboard
+                inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(),0);
+                mSearchLocationLayout.setVisibility(View.GONE);
+                mCurrentLocationLayout.setVisibility(View.GONE);
+
             }
         });
 
@@ -167,15 +211,24 @@ public class SearchByActivity extends BaseActivity implements SearchByMvpView {
         showMessage(message);
     }
 
-    @Override
-    public void logoutSession() {
-
-    }
 
     @Override
     public void showError(Throwable error) {
 
     }
+
+    public void hideSearchLocationEditText(){
+        mSearchLocationLayout.setVisibility(View.GONE);
+        mCurrentLocationLayout.setVisibility(View.GONE);
+    }
+
+    public static void hideKeyboard(Activity activity) {
+        InputMethodManager imm =
+                (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(activity.getWindow().getDecorView().getWindowToken(), 0);
+    }
+
+
 
     class CustomTextWatcher implements TextWatcher {
         @Override

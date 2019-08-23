@@ -10,7 +10,6 @@ import android.support.v7.widget.RecyclerView;
 import android.text.format.DateFormat;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -20,11 +19,7 @@ import com.yelp.android.data.model.response.ImageUrl;
 import com.yelp.android.features.base.BaseActivity;
 import com.yelp.android.injection.component.ActivityComponent;
 
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -34,14 +29,11 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import timber.log.Timber;
 
-import static timber.log.Timber.d;
-
 
 public class DetailsActivity extends BaseActivity implements DetailsMvpView {
 
     private int current_day;
     private ProgressDialog progressDialog;
-    private String[] urlArray;
 
     @Inject
     DetailsPresenter presenter;
@@ -65,6 +57,7 @@ public class DetailsActivity extends BaseActivity implements DetailsMvpView {
     @BindView(R.id.opening_hour) public TextView openingHour;
     @BindView(R.id.closing_hour) public TextView closingHour;
     @BindView(R.id.price) public TextView price;
+    @BindView(R.id.no_image_text) public TextView noImageTxt;
 
     @OnClick(R.id.toolbar_back) void back() {
         finish();
@@ -235,8 +228,11 @@ public class DetailsActivity extends BaseActivity implements DetailsMvpView {
         imagesAdapter.setImageUrls(getApplicationContext(), imageUrlList);
         if (imageUrlList.size() > 0){
             recyclerViewImages.setAdapter(imagesAdapter);
+            recyclerViewImages.setVisibility(View.VISIBLE);
+            noImageTxt.setVisibility(View.GONE);
         } else {
             recyclerViewImages.setVisibility(View.GONE);
+            noImageTxt.setVisibility(View.VISIBLE);
         }
     }
 

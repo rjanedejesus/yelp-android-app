@@ -69,17 +69,7 @@ public class SearchByAdapter extends RecyclerView.Adapter<SearchByAdapter.Search
         holder.onBind(searchedItem, position);
         holder.item_holder.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v){
-
-//                name -- OK
-//                photo
-//                categories -- OK
-//                hours of operation --
-//                address -- OK
-//                contact info -- OK
-//                Ratings -- OK
-//                snippet
-//                Deals
-
+                ((SearchByActivity)context).hideSearchLocationEditText();
                 String address1, city, state, zipcode, review;
                 address1 = searchedItem.location.address1;
                 city = searchedItem.location.city;
@@ -113,6 +103,7 @@ public class SearchByAdapter extends RecyclerView.Adapter<SearchByAdapter.Search
 
 
     Observable<String> getExpenseClick() {
+
         return expenseItemClick;
     }
 

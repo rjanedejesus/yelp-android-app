@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <com.yelp.android.util.font.HelveticaNeueLTProRoman_TextView
+        android:id="@+id/text_error_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="26dp"
+        android:gravity="center_horizontal"
+        android:text="@string/error_title"
+        android:visibility="gone"
+        android:textSize="@dimen/text_large" />
+
+    <com.yelp.android.util.font.HelveticaNeueLTProRoman_TextView
+        android:id="@+id/text_error_message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:gravity="center_horizontal"
+        android:padding="16dp"
+        android:lineSpacingExtra="@dimen/margin_small"
+        android:text="@string/error_message"
+        android:textSize="@dimen/text_normal" />
+
+    <Button
+        android:id="@+id/button_reload"
+        style="@style/Button.Black"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/error_reload" />
+
+</merge>

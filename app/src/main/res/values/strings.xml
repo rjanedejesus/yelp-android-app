@@ -1,0 +1,40 @@
+<resources>
+    <string name="app_name">Yelp</string>
+
+    <!-- General Usage -->
+    <string name="dialog_action_ok">OK</string>
+    <string name="dialog_action_cancel">Cancel</string>
+    <string name="dialog_error_title">Sorry</string>
+    <string name="error_server">Connection Error. Please try again.</string>
+    <string name="confirm_exit">Are you sure you want to exit?</string>
+    <string name="confirm_logout">Are you sure you want to logout?</string>
+    <string name="invalid_token">Session expired. Please login again.</string>
+    <string name="done">Done</string>
+    <string name="title_empty"></string>
+    <string name="no_items">No items</string>
+
+    <!-- Error View -->
+    <string name="error_title">Oops</string>
+    <string name="error_message">There was a problem loading the item, please try again!</string>
+    <string name="error_reload">Reload</string>
+    <string name="title_activity_maps_sample">Map</string>
+    <string name="error_something_bad_happened">Something bad happened. Please try again.</string>
+
+    <string name="home">Home</string>
+    <string name="go">Go!</string>
+    <string name="start_search">Start Search</string>
+    <string name="search_business_by">Search business by:</string>
+    <string name="search_business_via">Search via</string>
+    <string name="search_business_name">Business name</string>
+    <string name="search_address">Address/city/postal code</string>
+    <string name="search_cuisine_type">Cuisine type</string>
+    <string name="search_business">Search business</string>
+    <string name="search_location">Search location</string>
+    <string name="current_location">Current location</string>
+    <string name="details_page">Details Page</string>
+    <string name="telephone">Telephone</string>
+    <string name="opening_hour">Opening hour</string>
+    <string name="closing_hour">Closing hour</string>
+
+
+</resources>

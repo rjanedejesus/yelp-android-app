@@ -7,7 +7,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.location.Address;
@@ -24,12 +23,12 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.helper.ItemTouchHelper;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -113,47 +112,7 @@ public class SearchByActivity extends BaseActivity implements SearchByMvpView, L
 
     @OnClick(R.id.search_button)
     void searchButtonClicked() {
-        getCurrentLocation();
-        searchByAdapter.clearData();
-        hideKeyboard(this);
-        mSearchLocationLayout.setVisibility(GONE);
-        mCurrentLocationLayout.setVisibility(GONE);
-        mSearchBusinessEdittext.clearFocus();
-
-        apiLocation = mSearchLocationEdittext.getText().toString();
-        term = mSearchBusinessEdittext.getText().toString();
-        String sortBy = "";
-
-        if (isSortedBy){
-            if (isSortByRating){
-                sortBy = "rating";
-            } else if (isSortByDistance){
-                sortBy = "distance";
-            }
-        }
-
-        d("apiLocation >> " + apiLocation);
-        d("isSortedBy >> " + isSortedBy);
-        d("isSortByRating >> " + isSortByRating);
-        d("isSortByDistance >> " + isSortByDistance);
-
-        if (apiLocation.equalsIgnoreCase("Current Location")){
-            if (isSortedBy){
-                presenter.sortListCurrentLocation(currentLocationLongitude, currentLocationLatitude, term, sortBy);
-            } else {
-                presenter.getSearchedListCurrentLocation(currentLocationLongitude, currentLocationLatitude, term);
-            }
-
-        } else {
-            if (isSortedBy){
-                presenter.sortListTypedLocation(apiLocation, term, sortBy);
-            } else {
-                presenter.getSearchedListInputLocation(apiLocation, term);
-            }
-        }
-
-
-
+        searchBusiness();
     }
 
     @OnClick(R.id.current_location_layout)
@@ -281,6 +240,28 @@ public class SearchByActivity extends BaseActivity implements SearchByMvpView, L
             }
         });
 
+        mSearchBusinessEdittext.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    searchBusiness();
+                    return true;
+                }
+                return false;
+            }
+        });
+
+        mSearchLocationEdittext.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    searchBusiness();
+                    return true;
+                }
+                return false;
+            }
+        });
+
     }
 
     @Override
@@ -330,6 +311,47 @@ public class SearchByActivity extends BaseActivity implements SearchByMvpView, L
     @Override
     public void showError(Throwable error) {
 
+    }
+
+    public void searchBusiness(){
+        getCurrentLocation();
+        searchByAdapter.clearData();
+        hideKeyboard(this);
+        mSearchLocationLayout.setVisibility(GONE);
+        mCurrentLocationLayout.setVisibility(GONE);
+        mSearchBusinessEdittext.clearFocus();
+
+        apiLocation = mSearchLocationEdittext.getText().toString();
+        term = mSearchBusinessEdittext.getText().toString();
+        String sortBy = "";
+
+        if (isSortedBy){
+            if (isSortByRating){
+                sortBy = "rating";
+            } else if (isSortByDistance){
+                sortBy = "distance";
+            }
+        }
+
+        d("apiLocation >> " + apiLocation);
+        d("isSortedBy >> " + isSortedBy);
+        d("isSortByRating >> " + isSortByRating);
+        d("isSortByDistance >> " + isSortByDistance);
+
+        if (apiLocation.equalsIgnoreCase("Current Location")){
+            if (isSortedBy){
+                presenter.sortListCurrentLocation(currentLocationLongitude, currentLocationLatitude, term, sortBy);
+            } else {
+                presenter.getSearchedListCurrentLocation(currentLocationLongitude, currentLocationLatitude, term);
+            }
+
+        } else {
+            if (isSortedBy){
+                presenter.sortListTypedLocation(apiLocation, term, sortBy);
+            } else {
+                presenter.getSearchedListInputLocation(apiLocation, term);
+            }
+        }
     }
 
     public void hideSearchLocationEditText() {
@@ -426,14 +448,12 @@ public class SearchByActivity extends BaseActivity implements SearchByMvpView, L
 
     void getCurrentLocation() {
         try {
-            d("getCurrentLocation!!!");
             locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
             if (locationManager != null) {
                 locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 5000, 5, this);
             }
         }
         catch(SecurityException e) {
-            d("getCurrentLocation error!!!");
             e.printStackTrace();
         }
     }

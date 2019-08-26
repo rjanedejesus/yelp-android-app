@@ -92,7 +92,8 @@
                         android:drawablePadding="@dimen/margin_normal"
                         android:textSize="@dimen/text_small"
                         android:background="@null"
-                        android:singleLine="true">
+                        android:singleLine="true"
+                        android:selectAllOnFocus="true">
                     </EditText>
 
                     <View

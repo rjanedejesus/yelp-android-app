@@ -154,6 +154,10 @@ public class HttpRequestHelper {
         @GET("search")
         Observable<SearchedResponse> sortListFromInputLocationList(@Query("location") String location, @Query("term") String term, @Query("sort_by") String sort_by);
 
+//        //autocomplete businesses
+//        @GET("autocomplete")
+//        Observable<AutoCompleteResponse> autoCompleteBusiness(@Query("businesses") String businesses);
+
 
         //business details
         @GET("{id}")

@@ -1,9 +1,9 @@
 package com.yelp.common;
 
-import com.yelp.android.data.model.response.NamedResource;
-import com.yelp.android.data.model.response.Pokemon;
-import com.yelp.android.data.model.response.Sprites;
-import com.yelp.android.data.model.response.Statistic;
+import com.yep.android.data.model.response.NamedResource;
+import com.yep.android.data.model.response.Pokemon;
+import com.yep.android.data.model.response.Sprites;
+import com.yep.android.data.model.response.Statistic;
 
 import java.util.ArrayList;
 import java.util.List;

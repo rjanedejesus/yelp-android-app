@@ -1,10 +1,10 @@
 package com.yelp;
 
-import com.yelp.android.common.TestDataFactory;
-import com.yelp.android.data.DataManager;
-import com.yelp.android.data.model.response.Pokemon;
-import com.yelp.android.features.detail.DetailMvpView;
-import com.yelp.android.features.detail.DetailPresenter;
+import com.yep.android.common.TestDataFactory;
+import com.yep.android.data.DataManager;
+import com.yep.android.data.model.response.Pokemon;
+import com.yep.android.features.detail.DetailMvpView;
+import com.yep.android.features.detail.DetailPresenter;
 import com.yelp.util.RxSchedulersOverrideRule;
 
 import org.junit.After;

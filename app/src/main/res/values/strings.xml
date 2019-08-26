@@ -13,6 +13,9 @@
     <string name="title_empty"> </string>
     <string name="no_items">No items</string>
     <string name="no_image">No image</string>
+    <string name="sort">Sort</string>
+    <string name="rating">Rating</string>
+    <string name="distance">Distance</string>
 
     <!-- Error View -->
     <string name="error_title">Oops</string>

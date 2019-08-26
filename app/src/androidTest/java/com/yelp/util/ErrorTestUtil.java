@@ -1,6 +1,6 @@
 package com.yelp.util;
 
-import com.yelp.android.R;
+import com.yep.android.R;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;

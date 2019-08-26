@@ -1,6 +1,6 @@
 package com.yelp.common.injection.component;
 
-import com.yelp.android.injection.component.AppComponent;
+import com.yep.android.injection.component.AppComponent;
 import com.yelp.common.injection.module.ApplicationTestModule;
 
 import javax.inject.Singleton;

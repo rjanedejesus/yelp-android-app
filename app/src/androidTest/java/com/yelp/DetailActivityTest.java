@@ -4,11 +4,11 @@ import android.support.test.InstrumentationRegistry;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
-import com.yelp.android.common.TestComponentRule;
-import com.yelp.android.common.TestDataFactory;
-import com.yelp.android.data.model.response.Pokemon;
-import com.yelp.android.data.model.response.Statistic;
-import com.yelp.android.features.detail.DetailActivity;
+import com.yep.android.common.TestComponentRule;
+import com.yep.android.common.TestDataFactory;
+import com.yep.android.data.model.response.Pokemon;
+import com.yep.android.data.model.response.Statistic;
+import com.yep.android.features.detail.DetailActivity;
 import com.yelp.util.ErrorTestUtil;
 
 import org.junit.Rule;

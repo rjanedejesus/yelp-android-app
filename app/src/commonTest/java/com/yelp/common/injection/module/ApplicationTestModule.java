@@ -3,8 +3,8 @@ package com.yelp.common.injection.module;
 import android.app.Application;
 import android.content.Context;
 
-import com.yelp.android.data.DataManager;
-import com.yelp.android.injection.ApplicationContext;
+import com.yep.android.data.DataManager;
+import com.yep.android.injection.ApplicationContext;
 
 import javax.inject.Singleton;
 

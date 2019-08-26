@@ -3,7 +3,7 @@ package com.yelp.runner;
 import android.app.Application;
 import android.content.Context;
 
-import com.yelp.android.YelpApplication;
+import com.yep.android.YelpApplication;
 
 import io.appflate.restmock.android.RESTMockTestRunner;
 

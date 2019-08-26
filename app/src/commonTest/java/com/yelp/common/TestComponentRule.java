@@ -2,8 +2,8 @@ package com.yelp.common;
 
 import android.content.Context;
 
-import com.yelp.android.YelpApplication;
-import com.yelp.android.data.DataManager;
+import com.yep.android.YelpApplication;
+import com.yep.android.data.DataManager;
 import com.yelp.common.injection.component.TestComponent;
 import com.yelp.common.injection.module.ApplicationTestModule;
 

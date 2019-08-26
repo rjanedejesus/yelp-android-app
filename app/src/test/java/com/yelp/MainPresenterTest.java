@@ -1,30 +1,19 @@
 package com.yelp;
 
-import com.yelp.android.data.DataManager;
-import com.yelp.android.features.main.MainMvpView;
-import com.yelp.android.features.main.MainPresenter;
-import com.yelp.common.TestDataFactory;
+import com.yep.android.data.DataManager;
+import com.yep.android.features.main.MainMvpView;
+import com.yep.android.features.main.MainPresenter;
 import com.yelp.util.RxSchedulersOverrideRule;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
-import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import java.util.List;
-
-import io.reactivex.Single;
-
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyBoolean;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 /**
  * Created by ravindra on 24/12/16.

@@ -24,6 +24,7 @@ public class SearchByPresenter extends BasePresenter<SearchByMvpView> {
     private final DataManager dataManager;
     private HttpRequestHelper httpRequest;
     private List<SearchedItem> searchedItemArrayList = new ArrayList<>();
+    private int pageLimit = 50;
 
     @Inject
     public SearchByPresenter(DataManager dataManager) {
@@ -37,7 +38,7 @@ public class SearchByPresenter extends BasePresenter<SearchByMvpView> {
         getView().showProgress(true);
         dataManager.setCurrentLocationLongitude(String.valueOf(longitude));
         dataManager.setCurrentLocationLatitude(String.valueOf(latitude));
-        httpRequest.api.getListFromCurrentLocation(longitude, latitude, term)
+        httpRequest.api.getListFromCurrentLocation(pageLimit,longitude, latitude, term)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
@@ -73,7 +74,7 @@ public class SearchByPresenter extends BasePresenter<SearchByMvpView> {
         httpRequest = HttpRequestHelper.getInstance();
         checkViewAttached();
         getView().showProgress(true);
-        httpRequest.api.getListFromInputLocation(location, term)
+        httpRequest.api.getListFromInputLocation(pageLimit,location, term)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
@@ -111,7 +112,7 @@ public class SearchByPresenter extends BasePresenter<SearchByMvpView> {
         httpRequest = HttpRequestHelper.getInstance();
         checkViewAttached();
         getView().showProgress(true);
-        httpRequest.api.sortListFromCurrentLocationList(longitude, latitude, term, sort_by)
+        httpRequest.api.sortListFromCurrentLocationList(pageLimit,longitude, latitude, term, sort_by)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
@@ -147,7 +148,7 @@ public class SearchByPresenter extends BasePresenter<SearchByMvpView> {
         httpRequest = HttpRequestHelper.getInstance();
         checkViewAttached();
         getView().showProgress(true);
-        httpRequest.api.sortListFromInputLocationList(location, term, sort_by)
+        httpRequest.api.sortListFromInputLocationList(pageLimit,location, term, sort_by)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(

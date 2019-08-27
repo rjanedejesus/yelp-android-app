@@ -2,16 +2,25 @@ package com.yep.android.features.detailsPage;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateFormat;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
 
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.yep.android.R;
 import com.yep.android.data.model.response.ImageUrl;
 import com.yep.android.features.base.BaseActivity;
@@ -31,10 +40,11 @@ public class DetailsActivity extends BaseActivity implements DetailsMvpView {
 
     private int current_day;
     private ProgressDialog progressDialog;
+    private GoogleMap mMap;
 
     @Inject
     DetailsPresenter presenter;
-    
+
     @Inject
     ImagesAdapter imagesAdapter;
 
@@ -44,7 +54,7 @@ public class DetailsActivity extends BaseActivity implements DetailsMvpView {
 
     @BindView(R.id.recyclerView_images)
     RecyclerView recyclerViewImages;
-    
+
     @BindView(R.id.business_name) public TextView businessName;
     @BindView(R.id.category) public TextView categories;
     @BindView(R.id.location) public TextView location;
@@ -123,7 +133,14 @@ public class DetailsActivity extends BaseActivity implements DetailsMvpView {
         recyclerViewImages.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         recyclerViewImages.setAdapter(imagesAdapter);
 
+//        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
+//        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+//                .findFragmentById(R.id.map);
+//        mapFragment.getMapAsync(this);
+
+
     }
+
 
     @Override
     public void showProgress(boolean show) {
@@ -234,5 +251,24 @@ public class DetailsActivity extends BaseActivity implements DetailsMvpView {
     }
 
 
+    /**
+     * Manipulates the map once available.
+     * This callback is triggered when the map is ready to be used.
+     * This is where we can add markers or lines, add listeners or move the camera.
+     * In this case, we just add a marker near Sydney, Australia.
+     * If Google Play services is not installed on the device.
+     * This method will only be triggered once the user has installed
+     Google Play services and returned to the app.
+     */
+
+//    @Override
+//    public void onMapReady(GoogleMap googleMap) {
+//        mMap = googleMap;
+//        // Add a marker in Sydney and move the camera
+//        LatLng latLng = new LatLng(21, 57);
+//        mMap.addMarker(new
+//                MarkerOptions().position(latLng).title("Yelp"));
+//        mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+//    }
 }
 

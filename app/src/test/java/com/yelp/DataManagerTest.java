@@ -23,33 +23,4 @@ public class DataManagerTest {
 
     private DataManager dataManager;
 
-//    @Before
-//    public void setUp() {
-//        dataManager = new DataManager(mockPokemonService);
-//    }
-//
-//    @Test
-//    public void getPokemonListCompletesAndEmitsPokemonList() {
-//        List<NamedResource> namedResourceList = TestDataFactory.makeNamedResourceList(5);
-//        PokemonListResponse pokemonListResponse = new PokemonListResponse();
-//        pokemonListResponse.results = namedResourceList;
-//
-//        when(mockPokemonService.getPokemonList(anyInt()))
-//                .thenReturn(Single.just(pokemonListResponse));
-//
-//        dataManager
-//                .getPokemonList(10)
-//                .test()
-//                .assertComplete()
-//                .assertValue(TestDataFactory.makePokemonNameList(namedResourceList));
-//    }
-//
-//    @Test
-//    public void getPokemonCompletesAndEmitsPokemon() {
-//        String name = "charmander";
-//        Pokemon pokemon = TestDataFactory.makePokemon(name);
-//        when(mockPokemonService.getPokemon(anyString())).thenReturn(Single.just(pokemon));
-//
-//        dataManager.getPokemon(name).test().assertComplete().assertValue(pokemon);
-//    }
 }

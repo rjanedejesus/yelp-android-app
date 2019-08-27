@@ -140,19 +140,19 @@ public class HttpRequestHelper {
 
         //using current location
         @GET("search")
-        Observable<SearchedResponse> getListFromCurrentLocation(@Query("longitude") double longitude, @Query("latitude") double latitude, @Query("term") String term);
+        Observable<SearchedResponse> getListFromCurrentLocation(@Query("limit") int limit, @Query("longitude") double longitude, @Query("latitude") double latitude, @Query("term") String term);
 
         //using typed location
         @GET("search")
-        Observable<SearchedResponse> getListFromInputLocation(@Query("location") String location, @Query("term") String term);
+        Observable<SearchedResponse> getListFromInputLocation(@Query("limit") int limit,@Query("location") String location, @Query("term") String term);
 
         //using current location, sort_by
         @GET("search")
-        Observable<SearchedResponse> sortListFromCurrentLocationList(@Query("longitude") double longitude, @Query("latitude") double latitude, @Query("term") String term, @Query("sort_by") String sort_by);
+        Observable<SearchedResponse> sortListFromCurrentLocationList(@Query("limit") int limit,@Query("longitude") double longitude, @Query("latitude") double latitude, @Query("term") String term, @Query("sort_by") String sort_by);
 
         //using typed location, sort_by
         @GET("search")
-        Observable<SearchedResponse> sortListFromInputLocationList(@Query("location") String location, @Query("term") String term, @Query("sort_by") String sort_by);
+        Observable<SearchedResponse> sortListFromInputLocationList(@Query("limit") int limit,@Query("location") String location, @Query("term") String term, @Query("sort_by") String sort_by);
 
 //        //autocomplete businesses
 //        @GET("autocomplete")

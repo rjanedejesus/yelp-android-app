@@ -40,6 +40,7 @@
     <string name="telephone">Telephone</string>
     <string name="opening_hour">Opening hour</string>
     <string name="closing_hour">Closing hour</string>
+    <string name="title_activity_maps">Map</string>
 
 
 </resources>

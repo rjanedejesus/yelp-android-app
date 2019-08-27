@@ -14,6 +14,7 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.design.widget.BottomSheetDialog;
@@ -54,13 +55,12 @@ import static android.view.View.GONE;
 import static timber.log.Timber.d;
 
 /**
- * screen where you chose what category to search
+ * main screen for searching business based on location, term
  */
 public class SearchByActivity extends BaseActivity implements SearchByMvpView, LocationListener {
 
     private String apiLocation;
     private String term;
-    boolean isCurrentLocationKnown = false;
     LocationManager locationManager;
     private double currentLocationLatitude;
     private double currentLocationLongitude;
@@ -70,7 +70,8 @@ public class SearchByActivity extends BaseActivity implements SearchByMvpView, L
     private boolean isSortedBy = false;
     private boolean isSortByRating =  false;
     private boolean isSortByDistance =  false;
-    String businessLocationTxt;
+    private String businessLocationTxt;
+    private String currentLocationTxt = "Current Location";
 
     @Inject
     SearchByPresenter presenter;
@@ -117,23 +118,17 @@ public class SearchByActivity extends BaseActivity implements SearchByMvpView, L
 
     @OnClick(R.id.current_location_layout)
     void currentLocationSelected() {
-        apiLocation = "Current Location";
-        if (!isCurrentLocationKnown){
+        apiLocation = currentLocationTxt;
+        if (!isLocationEnabled(this)){
             showSettingsAlert();
         } else {
-            mSearchLocationEdittext.setText("Current Location");
+            mSearchLocationEdittext.setText(currentLocationTxt);
             mSearchLocationEdittext.setTextColor(getResources().getColor(R.color.blue));
             mCurrentLocationLayout.setVisibility(GONE);
         }
 
     }
 
-    @OnClick(R.id.search_location_layout)
-    void searchLocationLayoutClicked() {
-        if (mSearchLocationEdittext.getText().toString().equals("Current Location")){
-
-        }
-    }
 
     @OnClick(R.id.sort_layout)
     void sortLayout() {
@@ -189,12 +184,12 @@ public class SearchByActivity extends BaseActivity implements SearchByMvpView, L
                     android.Manifest.permission.ACCESS_COARSE_LOCATION}, 101);
         }
 
-        currentLocationLatitude = presenter.getCurrentLocationLatitude();
-        currentLocationLongitude = presenter.getCurrentLocationLongitude();
+//        currentLocationLatitude = presenter.getCurrentLocationLatitude();
+//        currentLocationLongitude = presenter.getCurrentLocationLongitude();
 
 
         //show alert if current location is not yet known
-        if (!isCurrentLocationKnown){
+        if (!isLocationEnabled(this)){
             showSettingsAlert();
         }
 
@@ -321,7 +316,12 @@ public class SearchByActivity extends BaseActivity implements SearchByMvpView, L
         mCurrentLocationLayout.setVisibility(GONE);
         mSearchBusinessEdittext.clearFocus();
 
-        apiLocation = mSearchLocationEdittext.getText().toString();
+        if (mSearchLocationEdittext.getText().toString().equals("")){
+            Toast.makeText(this, "Please select location.", Toast.LENGTH_SHORT).show();
+        } else {
+            apiLocation = mSearchLocationEdittext.getText().toString();
+        }
+
         term = mSearchBusinessEdittext.getText().toString();
         String sortBy = "";
 
@@ -338,7 +338,7 @@ public class SearchByActivity extends BaseActivity implements SearchByMvpView, L
         d("isSortByRating >> " + isSortByRating);
         d("isSortByDistance >> " + isSortByDistance);
 
-        if (apiLocation.equalsIgnoreCase("Current Location")){
+        if (apiLocation!= null && apiLocation.equalsIgnoreCase(currentLocationTxt)){
             if (isSortedBy){
                 presenter.sortListCurrentLocation(currentLocationLongitude, currentLocationLatitude, term, sortBy);
             } else {
@@ -420,7 +420,7 @@ public class SearchByActivity extends BaseActivity implements SearchByMvpView, L
             d("businessLocationTxt >> " +businessLocationTxt);
             isSortedBy = true;
             isSortByRating = true;
-            if (businessLocationTxt.equalsIgnoreCase("Current Location")){
+            if (businessLocationTxt.equalsIgnoreCase(currentLocationTxt)){
                 presenter.sortListCurrentLocation(currentLocationLongitude, currentLocationLatitude, term, "rating");
             } else {
                 presenter.sortListTypedLocation(businessLocationTxt, term, "rating");
@@ -433,7 +433,7 @@ public class SearchByActivity extends BaseActivity implements SearchByMvpView, L
             d("businessLocationTxt >> " +businessLocationTxt);
             isSortedBy = true;
             isSortByDistance = true;
-            if (businessLocationTxt.equalsIgnoreCase("Current Location")){
+            if (businessLocationTxt.equalsIgnoreCase(currentLocationTxt)){
                 presenter.sortListCurrentLocation(currentLocationLongitude, currentLocationLatitude, term, "distance");
             } else {
                 presenter.sortListTypedLocation(businessLocationTxt, term, "distance");
@@ -444,6 +444,21 @@ public class SearchByActivity extends BaseActivity implements SearchByMvpView, L
 
 
 
+    }
+
+    public static Boolean isLocationEnabled(Context context)
+    {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+// This is new method provided in API 28
+            LocationManager lm = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+            return lm.isLocationEnabled();
+        } else {
+// This is Deprecated in API 28
+            int mode = Settings.Secure.getInt(context.getContentResolver(), Settings.Secure.LOCATION_MODE,
+                    Settings.Secure.LOCATION_MODE_OFF);
+            return  (mode != Settings.Secure.LOCATION_MODE_OFF);
+
+        }
     }
 
     void getCurrentLocation() {
@@ -461,7 +476,6 @@ public class SearchByActivity extends BaseActivity implements SearchByMvpView, L
     @Override
     public void onLocationChanged(Location location) {
         d("current location" + "Latitude: " + location.getLatitude() + "\n Longitude: " + location.getLongitude());
-        isCurrentLocationKnown = true;
         currentLocationLatitude = location.getLatitude();
         currentLocationLongitude = location.getLongitude();
 

@@ -14,8 +14,10 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-        // Start home activity
+        //initial screen
+        //splash screen to SearchByActivity
         startActivity(new Intent(SplashActivity.this, SearchByActivity.class));
+
         // close splash activity
         finish();
 

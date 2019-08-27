@@ -1,7 +1,6 @@
 package com.yelp;
 
 import com.yep.android.data.DataManager;
-import com.yep.android.data.remote.PokemonService;
 import com.yelp.util.RxSchedulersOverrideRule;
 
 import org.junit.Rule;
@@ -17,9 +16,6 @@ public class DataManagerTest {
 
     @Rule
     public final RxSchedulersOverrideRule overrideSchedulersRule = new RxSchedulersOverrideRule();
-
-    @Mock
-    private PokemonService mockPokemonService;
 
     private DataManager dataManager;
 

@@ -41,8 +41,6 @@
         </activity>
         <activity android:name=".features.searchBy.SearchByActivity" />
         <activity android:name=".features.detailsPage.DetailsActivity"/>
-        <activity android:name=".features.main.MainActivity" />
-
         <activity android:name=".features.detailsPage.MapsActivity">
             <!--<intent-filter>-->
                 <!--<action android:name="android.intent.action.MAIN" />-->

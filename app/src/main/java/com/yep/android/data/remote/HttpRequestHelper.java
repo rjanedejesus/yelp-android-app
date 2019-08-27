@@ -8,7 +8,6 @@ import com.yep.android.data.model.response.BusinessDetailResponse;
 import com.yep.android.data.model.response.SearchedResponse;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
@@ -23,7 +22,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
-import retrofit2.http.QueryMap;
 
 public class HttpRequestHelper {
 
@@ -157,7 +155,6 @@ public class HttpRequestHelper {
 //        //autocomplete businesses
 //        @GET("autocomplete")
 //        Observable<AutoCompleteResponse> autoCompleteBusiness(@Query("businesses") String businesses);
-
 
         //business details
         @GET("{id}")

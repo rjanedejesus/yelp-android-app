@@ -72,6 +72,9 @@ public class SearchByAdapter extends RecyclerView.Adapter<SearchByAdapter.Search
                 zipcode = searchedItem.location.zip_code;
                 itemLocation = address1 + ", " + city + ", " + state + " " + zipcode;
 
+                //sets the intent
+                //put data
+                //data will then be fetched and display in DetailsActivity
                 Intent intent = new Intent(context, DetailsActivity.class);
                 intent.putExtra("name", searchedItem.name);
                 intent.putExtra("categories", searchedItem.categories.get(0).title);
@@ -91,17 +94,6 @@ public class SearchByAdapter extends RecyclerView.Adapter<SearchByAdapter.Search
     public int getItemCount() {
         return mList == null ? 0 : mList.size();
     }
-
-    public List<SearchedItem> getSearchByResponseList(){
-        return searchedList;
-    }
-
-
-    Observable<String> getExpenseClick() {
-
-        return expenseItemClick;
-    }
-
 
     public class SearchByViewHolder extends RecyclerView.ViewHolder {
 
@@ -127,16 +119,28 @@ public class SearchByAdapter extends RecyclerView.Adapter<SearchByAdapter.Search
 
         void onBind(SearchedItem searchedItem, int position) {
             this.searchedItem = searchedItem;
+
+            //set the business name
             businessName.setText(searchedItem.name);
+
+            //set the business category/categories
             category.setText(searchedItem.categories.get(0).title);
+
+            //get business location (address, city, state, zipcode,
             String address1, city, state, zipcode, review;
             address1 = searchedItem.location.address1;
             city = searchedItem.location.city;
             state = searchedItem.location.state;
             zipcode = searchedItem.location.zip_code;
+
+            //concatenated business location/address
             completeLocation = address1 + ", " + city + ", " + state + " " + zipcode;
             location.setText(completeLocation);
+
+            //set rating of the business using rating bar
             ratingBar.setRating((float) searchedItem.rating);
+
+            //set review count
             review = String.valueOf(searchedItem.review_count);
             reviewCount.setText(review + " Reviews");
 
@@ -144,6 +148,7 @@ public class SearchByAdapter extends RecyclerView.Adapter<SearchByAdapter.Search
         }
     }
 
+    //remove previous data
     public void clearData() {
         this.mList.clear();
         this.notifyDataSetChanged();

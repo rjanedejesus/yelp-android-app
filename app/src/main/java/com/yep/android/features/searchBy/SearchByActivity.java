@@ -111,6 +111,7 @@ public class SearchByActivity extends BaseActivity implements SearchByMvpView, L
     @BindView(R.id.sort_layout)
     LinearLayout sortLayout;
 
+
     @OnClick(R.id.search_button)
     void searchButtonClicked() {
         searchBusiness();
@@ -119,9 +120,11 @@ public class SearchByActivity extends BaseActivity implements SearchByMvpView, L
     @OnClick(R.id.current_location_layout)
     void currentLocationSelected() {
         apiLocation = currentLocationTxt;
+        //check if location in settings has been enabled
         if (!isLocationEnabled(this)){
             showSettingsAlert();
         } else {
+            //change text color to blue if location = Current Location
             mSearchLocationEdittext.setText(currentLocationTxt);
             mSearchLocationEdittext.setTextColor(getResources().getColor(R.color.blue));
             mCurrentLocationLayout.setVisibility(GONE);
@@ -132,6 +135,7 @@ public class SearchByActivity extends BaseActivity implements SearchByMvpView, L
 
     @OnClick(R.id.sort_layout)
     void sortLayout() {
+        //display bottom sheet with radio buttons (rating and distance)
         sortBottomSheet.show();
     }
 
@@ -160,11 +164,6 @@ public class SearchByActivity extends BaseActivity implements SearchByMvpView, L
     protected void initComponents() {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(searchByAdapter);
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
 
         //this code removed the default back arrow of toolbar
         ActionBar actionBar = getSupportActionBar();
@@ -174,9 +173,10 @@ public class SearchByActivity extends BaseActivity implements SearchByMvpView, L
             actionBar.setDisplayShowHomeEnabled(false); // remove the icon
         }
 
+        //bottom sheet (sorting) setup
         setupSortBottomSheet();
 
-        //permission check
+        //permission check for location
         if (ContextCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getApplicationContext(),
                 android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -193,7 +193,10 @@ public class SearchByActivity extends BaseActivity implements SearchByMvpView, L
             showSettingsAlert();
         }
 
+        //get current location
         getCurrentLocation();
+
+        //check text change for the edittexts
         customTextWatcher = new CustomTextWatcher();
         mSearchBusinessEdittext.addTextChangedListener(customTextWatcher);
         mSearchbusinessLocationTxt.addTextChangedListener(customTextWatcher);
@@ -238,6 +241,7 @@ public class SearchByActivity extends BaseActivity implements SearchByMvpView, L
         mSearchBusinessEdittext.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                //keypad action listener when `Done` is clicked
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
                     searchBusiness();
                     return true;
@@ -249,6 +253,7 @@ public class SearchByActivity extends BaseActivity implements SearchByMvpView, L
         mSearchLocationEdittext.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                //keypad action listener when `Done` is clicked
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
                     searchBusiness();
                     return true;
@@ -256,9 +261,17 @@ public class SearchByActivity extends BaseActivity implements SearchByMvpView, L
                 return false;
             }
         });
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+
 
     }
 
+    //shows and hides the progress dialog
     @Override
     public void showProgress(boolean show) {
         if (show) {
@@ -273,10 +286,8 @@ public class SearchByActivity extends BaseActivity implements SearchByMvpView, L
     }
 
     @Override
-    public void callDetailPage() {
-//        callActivity(BottomNavigationActivity.class, null);
-//        finish();
-    }
+    public void callDetailPage() { }
+
 
     @Override
     public void showRecyclerView() {
@@ -285,6 +296,7 @@ public class SearchByActivity extends BaseActivity implements SearchByMvpView, L
         sortLayout.setVisibility(View.VISIBLE);
     }
 
+    //hide the `No item` text if the api returned no item
     @Override
     public void hideRecyclerView() {
         recyclerView.setVisibility(GONE);
@@ -292,6 +304,7 @@ public class SearchByActivity extends BaseActivity implements SearchByMvpView, L
         sortLayout.setVisibility(GONE);
     }
 
+    //set items for searchedItemArrayList
     @Override
     public void setSearchedList(List<SearchedItem> searchedListItems) {
         searchByAdapter.setExpenses(searchedListItems);
@@ -307,6 +320,7 @@ public class SearchByActivity extends BaseActivity implements SearchByMvpView, L
     public void showError(Throwable error) {
 
     }
+
 
     public void searchBusiness(){
         getCurrentLocation();
@@ -359,12 +373,14 @@ public class SearchByActivity extends BaseActivity implements SearchByMvpView, L
         mCurrentLocationLayout.setVisibility(GONE);
     }
 
+    //hide the keyboard
     public static void hideKeyboard(Activity activity) {
         InputMethodManager imm =
                 (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(activity.getWindow().getDecorView().getWindowToken(), 0);
     }
 
+    //displays dialog box if location in setting is off/disabled
     public void showSettingsAlert(){
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
         // Setting Dialog Message
@@ -404,6 +420,7 @@ public class SearchByActivity extends BaseActivity implements SearchByMvpView, L
         }
     }
 
+    //set the bottom sheet for sorting (distance and rating)
     private void setupSortBottomSheet() {
         sortBottomSheet = new BottomSheetDialog(this);
         View sheetView = getLayoutInflater().inflate(R.layout.bottom_sheet_dialog, null);
@@ -412,8 +429,7 @@ public class SearchByActivity extends BaseActivity implements SearchByMvpView, L
         mSortRatingRb = (RadioButton) sheetView.findViewById(R.id.rating_rb);
         mSortDistanceRb = (RadioButton) sheetView.findViewById(R.id.distance_rb);
 
-
-
+        //calls api with sorted list by rating
         mSortRatingRb.setOnClickListener(v -> {
            sortBottomSheet.dismiss();
             businessLocationTxt = mSearchLocationEdittext.getText().toString();
@@ -427,6 +443,7 @@ public class SearchByActivity extends BaseActivity implements SearchByMvpView, L
             }
         });
 
+        //calls api with sorted list by distance
         mSortDistanceRb.setOnClickListener(v -> {
             sortBottomSheet.dismiss();
             businessLocationTxt = mSearchLocationEdittext.getText().toString();
@@ -441,19 +458,17 @@ public class SearchByActivity extends BaseActivity implements SearchByMvpView, L
 
         });
 
-
-
-
     }
 
+    //checks if location in setting is enabled or disabled
     public static Boolean isLocationEnabled(Context context)
     {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-// This is new method provided in API 28
+        // This is new method provided in API 28
             LocationManager lm = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
             return lm.isLocationEnabled();
         } else {
-// This is Deprecated in API 28
+        // This is Deprecated in API 28
             int mode = Settings.Secure.getInt(context.getContentResolver(), Settings.Secure.LOCATION_MODE,
                     Settings.Secure.LOCATION_MODE_OFF);
             return  (mode != Settings.Secure.LOCATION_MODE_OFF);
@@ -461,6 +476,7 @@ public class SearchByActivity extends BaseActivity implements SearchByMvpView, L
         }
     }
 
+    //get user's current location
     void getCurrentLocation() {
         try {
             locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
@@ -473,6 +489,7 @@ public class SearchByActivity extends BaseActivity implements SearchByMvpView, L
         }
     }
 
+    //gets new location if users location changes
     @Override
     public void onLocationChanged(Location location) {
         d("current location" + "Latitude: " + location.getLatitude() + "\n Longitude: " + location.getLongitude());

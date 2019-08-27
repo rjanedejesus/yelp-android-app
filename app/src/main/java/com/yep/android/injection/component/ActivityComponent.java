@@ -4,7 +4,6 @@ import dagger.Subcomponent;
 
 import com.yep.android.features.detailsPage.DetailsActivity;
 import com.yep.android.features.detailsPage.MapsActivity;
-import com.yep.android.features.main.MainActivity;
 import com.yep.android.features.searchBy.SearchByActivity;
 import com.yep.android.injection.PerActivity;
 import com.yep.android.injection.module.ActivityModule;
@@ -13,8 +12,7 @@ import com.yep.android.injection.module.ActivityModule;
 @Subcomponent(modules = ActivityModule.class)
 public interface ActivityComponent {
 
-    void inject(MainActivity mainActivity);
-
+    /* add all your activities here */
     void inject(SearchByActivity searchByActivity);
 
     void inject(DetailsActivity detailsActivity);

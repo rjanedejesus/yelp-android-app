@@ -12,7 +12,7 @@ import static timber.log.Timber.d;
 
 @Singleton
 public class DataManager {
-    
+
     private YelpService yelpService;
     private PreferencesHelper preferencesHelper;
 
@@ -21,11 +21,6 @@ public class DataManager {
         this.yelpService = yelpService;
         this.preferencesHelper = preferencesHelper;
     }
-
-    /************ API Actions ************/
-
-
-
 
     /************ Shared Preferences Actions ************/
 

@@ -1,7 +1,6 @@
 package com.yelp.common;
 
 import com.yep.android.data.model.response.NamedResource;
-import com.yep.android.data.model.response.Pokemon;
 import com.yep.android.data.model.response.Sprites;
 import com.yep.android.data.model.response.Statistic;
 
@@ -22,64 +21,5 @@ public class TestDataFactory {
         return UUID.randomUUID().toString();
     }
 
-    public static Pokemon makePokemon(String id) {
-        Pokemon pokemon = new Pokemon();
-        pokemon.id = id;
-        pokemon.name = randomUuid() + id;
-        pokemon.stats = makeStatisticList(3);
-        pokemon.sprites = makeSprites();
-        return pokemon;
-    }
 
-    public static List<String> makePokemonNamesList(int count) {
-        List<String> pokemonList = new ArrayList<>();
-        for (int i = 0; i < count; i++) {
-            pokemonList.add(makePokemon(String.valueOf(i)).name);
-        }
-        return pokemonList;
-    }
-
-    public static List<String> makePokemonNameList(List<NamedResource> pokemonList) {
-        List<String> names = new ArrayList<>();
-        for (NamedResource pokemon : pokemonList) {
-            names.add(pokemon.name);
-        }
-        return names;
-    }
-
-    public static Statistic makeStatistic() {
-        Statistic statistic = new Statistic();
-        statistic.baseStat = random.nextInt();
-        statistic.stat = makeNamedResource(randomUuid());
-        return statistic;
-    }
-
-    public static List<Statistic> makeStatisticList(int count) {
-        List<Statistic> statisticList = new ArrayList<>();
-        for (int i = 0; i < count; i++) {
-            statisticList.add(makeStatistic());
-        }
-        return statisticList;
-    }
-
-    public static Sprites makeSprites() {
-        Sprites sprites = new Sprites();
-        sprites.frontDefault = randomUuid();
-        return sprites;
-    }
-
-    public static NamedResource makeNamedResource(String unique) {
-        NamedResource namedResource = new NamedResource();
-        namedResource.name = randomUuid() + unique;
-        namedResource.url = randomUuid();
-        return namedResource;
-    }
-
-    public static List<NamedResource> makeNamedResourceList(int count) {
-        List<NamedResource> namedResourceList = new ArrayList<>();
-        for (int i = 0; i < count; i++) {
-            namedResourceList.add(makeNamedResource(String.valueOf(i)));
-        }
-        return namedResourceList;
-    }
 }

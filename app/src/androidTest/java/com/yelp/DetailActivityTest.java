@@ -4,11 +4,7 @@ import android.support.test.InstrumentationRegistry;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
-import com.yep.android.common.TestComponentRule;
-import com.yep.android.common.TestDataFactory;
-import com.yep.android.data.model.response.Pokemon;
-import com.yep.android.data.model.response.Statistic;
-import com.yep.android.features.detail.DetailActivity;
+import com.yelp.common.TestComponentRule;
 import com.yelp.util.ErrorTestUtil;
 
 import org.junit.Rule;
@@ -32,36 +28,19 @@ public class DetailActivityTest {
     public final TestComponentRule component =
             new TestComponentRule(InstrumentationRegistry.getTargetContext());
 
-    public final ActivityTestRule<DetailActivity> detailActivityTestRule =
-            new ActivityTestRule<>(DetailActivity.class, false, false);
+//    public final ActivityTestRule<DetailActivity> detailActivityTestRule =
+//            new ActivityTestRule<>(DetailActivity.class, false, false);
 
     // TestComponentRule needs to go first to make sure the Dagger ApplicationTestComponent is set
     // in the Application before any Activity is launched.
-    @Rule
-    public TestRule chain = RuleChain.outerRule(component).around(detailActivityTestRule);
+//    @Rule
+//    public TestRule chain = RuleChain.outerRule(component).around(detailActivityTestRule);
 
-    @Test
-    public void checkPokemonDisplays() {
-        Pokemon pokemon = TestDataFactory.makePokemon("id");
-        stubDataManagerGetPokemon(Single.just(pokemon));
-        detailActivityTestRule.launchActivity(
-                DetailActivity.getStartIntent(InstrumentationRegistry.getContext(), pokemon.name));
-
-        for (Statistic stat : pokemon.stats) {
-            onView(withText(stat.stat.name)).check(matches(isDisplayed()));
-        }
-    }
 
     @Test
     public void checkErrorViewDisplays() {
-        stubDataManagerGetPokemon(Single.error(new RuntimeException()));
-        Pokemon pokemon = TestDataFactory.makePokemon("id");
-        detailActivityTestRule.launchActivity(
-                DetailActivity.getStartIntent(InstrumentationRegistry.getContext(), pokemon.name));
-        ErrorTestUtil.checkErrorViewsDisplay();
+
     }
 
-    public void stubDataManagerGetPokemon(Single<Pokemon> single) {
-        when(component.getMockApiManager().getPokemon(anyString())).thenReturn(single);
-    }
+
 }
